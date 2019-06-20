@@ -1,11 +1,11 @@
 from moviepy.editor import VideoFileClip, clips_array
 import os
+import random
 
-def stack(clip):
+def stack(clip1, clip2):
     
     # here we set the clip.duration. It must be shorter than the duration of the video or it will throw an error
-    final_clip = clips_array([[clip, clip],
-                          [clip, clip]])
+    final_clip = clips_array([[clip1, clip2]])                 
 
     return final_clip
 
@@ -27,13 +27,18 @@ print(content)
 ctr = len(content)
 
 for x in range(ctr):
+    vidnum = random.randrange(ctr)
+    file1 = content[vidnum]
+    clip1 = VideoFileClip(file1)
+    vidnum = random.randrange(ctr)
+    file2 = content[vidnum]
+    clip2 = VideoFileClip(file2)
 
-    elem = content[x]
 
-    clip = VideoFileClip(elem)
+    new_clip = stack(clip1, clip2)
 
-    new_clip = stack(clip)
+    arg = str(ctr)
 
-    outstr = "Output\\" + str(x) + "4" + ".mp4"
+    outstr = "Output\\" + str(x) + "2" + arg + ".mp4"
 
     new_clip.write_videofile(outstr)
