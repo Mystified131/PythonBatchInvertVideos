@@ -8,7 +8,7 @@ def color_shift(clip):
     The values of all pixels are replaced with (255-v) or (1-v) for masks 
     Black becomes white, green becomes purple, etc.
     """
-    hue = random.randrange(255)
+    hue = random.randrange(35, 225)
 
     maxi = (1.0 if clip.ismask else hue)
     return clip.fl_image(lambda f : maxi - f)
