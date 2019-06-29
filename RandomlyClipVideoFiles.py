@@ -4,12 +4,20 @@ import random
 
 def trim_randomly(clip):
 
-    st = random.randrange(20)
-    ln = random.randrange(15)
+    totlen = int(clip.duration)
+    blen = clip.duration - 4
 
-    new_clip = clip.set_start(t=st).set_end(t=(st + ln))
+    newlen = random.randrange(blen)
+    newlenb = newlen + 4
     
-    return new_clip
+    st = totlen - newlenb
+    ln = newlen
+
+    try:
+        new_clip = clip.set_start(t=st).set_end(t=(st + ln))
+        return new_clip
+    except:
+        return clip
 
 directr = "Input"
 
@@ -26,16 +34,12 @@ for subdir, dirs, files in os.walk(directr):
 
 print(content)
 
-ctr = len(content)
+elem = content[0]
 
-for x in range(ctr):
+clip = VideoFileClip(elem)
 
-    elem = content[x]
+new_clip = trim_randomly(clip)
 
-    clip = VideoFileClip(elem)
+outstr = "Output\\" + "t" + ".mp4"
 
-    new_clip = trim_randomly(clip)
-
-    outstr = "Output\\" + str(x) + "t" + ".mp4"
-
-    new_clip.write_videofile(outstr)
+new_clip.write_videofile(outstr)

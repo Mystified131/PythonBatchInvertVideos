@@ -5,12 +5,16 @@ import random
 
 def trim_randomly(clip):
 
-    st = random.randrange(20)
-    ln = random.randrange(15)
+   totlen = int(clip.duration)
+    blen = clip.duration - 4
 
-    new_clip = clip.set_start(t=st).set_end(t=(st + ln))
+    newlen = random.randrange(blen)
+    newlenb = newlen + 4
     
-    return new_clip
+    st = totlen - newlenb
+    ln = newlen
+    
+    return clip
 
 def color_shift(clip):
     """ Returns the color-inversed clip.
@@ -18,7 +22,7 @@ def color_shift(clip):
     The values of all pixels are replaced with (255-v) or (1-v) for masks 
     Black becomes white, green becomes purple, etc.
     """
-    hue = random.randrange(35, 225)
+    hue = random.randrange(255)
 
     maxi = (1.0 if clip.ismask else hue)
     return clip.fl_image(lambda f : maxi - f)
@@ -60,7 +64,7 @@ def sequence(clip1, clip2, clip3, clip4):
 
     return final_clip
 
-directr = "Input"
+directr = "FullTV"
 
 content = []
 
